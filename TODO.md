@@ -1,4 +1,4 @@
-### Phase 1: Setup, Downl
+### Phase 1: Setup, Downloader, and Packager
 - [X] Set up repository directory structure
     - [X] Set up environment
     - [X] Set up sub folder for code
