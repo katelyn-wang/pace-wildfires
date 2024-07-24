@@ -1,0 +1,32 @@
+### Phase 1: Setup, Downl
+- [X] Set up repository directory structure
+    - [X] Set up environment
+    - [X] Set up sub folder for code
+- [ ] Let's write a script to download one file from PACE-OCI
+    - https://oceancolor.gsfc.nasa.gov/about/missions/pace-oci/
+    - Find out what API we can query for information about the available data
+    - Filter what we download based on our requirements 
+    - Look at the file format (images). 
+    - Look at raw data + see how to parse it.
+- [ ] Write script to figure out the shape.
+    - Find a tool to open our images.
+    - Look at what bands are available in the imagery
+    - Select which processing level to use
+    - Define the parameters that our function will need
+        - Start date, end date,
+        - Data validity/filter settings
+        - Area of interest
+        - Further parameters to be added
+- [ ] Preprocess data / Validation (TBD on location / wish issues)
+    - Deal with invalidated data
+    - Data normalization scale
+- [ ] Write a function to divide large image into smaller chunks
+- [ ] Plot the sample chunks that were divided
+- [ ] Packager Code 
+    - Package into a nice function
+    - Selecting an output format for our final data set 
+- [ ] Visualization Code 
+    - Decide on the specific graphs 
+- [ ] Validation using EDA
+    - Dimensionality Reduction and visualization of chunks / anomalies in chunks
+

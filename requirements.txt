@@ -1,0 +1,8 @@
+pandas
+matplotlib
+scikit-learn
+seaborn
+xarray[complete]
+geopandas
+numpy
+earthaccess

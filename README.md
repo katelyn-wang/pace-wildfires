@@ -1,2 +1,2 @@
 # pace-wildlife
-PACE remote sensing for wildlife migration project
+PACE remote sensing for wildlife migration project 
