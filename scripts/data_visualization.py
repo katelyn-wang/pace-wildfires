@@ -132,7 +132,7 @@ if __name__ == '__main__':
     downloader = PaceDataDownloader(bounding_box=pacific_pal_bbox, time_span=january_dates)
 
     ### Download data for a short_name:
-    # downloader.download_data("PACE_OCI_L2_BGC_NRT")
+    downloader.download_data("PACE_OCI_L2_BGC_NRT", version=3.0, max_count=30)
     # downloader.download_data("PACE_OCI_L3M_CHL_NRT")
     # downloader.download_data("PACE_OCI_L2_AOP_NRT")
     # downloader.download_data("PACE_HARP2_L1C_SCI", max_count=1)
@@ -147,7 +147,6 @@ if __name__ == '__main__':
     TODO:
     - move plotting functions into separate module
     - add documentation (doc strings)
-    - look into V2 vs V3 data
     - download more data (increase max_count)
     - look into plotting AOP data
     - download and plot HARP2 and SPEXOne data

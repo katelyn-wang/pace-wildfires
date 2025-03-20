@@ -20,7 +20,7 @@ class PaceDataDownloader:
             summary = item.summary()
             print(summary["short-name"])
 
-    def download_data(self, short_name, max_count=20, save_dir=None):
+    def download_data(self, short_name, max_count=20, version=None, save_dir=None):
         """
         Downloads data with the specified short name, bounding box, and time span.
         Saves the downloaded data to data/{short_name} by default if no directory is specified.
@@ -30,6 +30,7 @@ class PaceDataDownloader:
             bounding_box=self.bbox,
             temporal=self.tspan,
             count=max_count,
+            version=version
         )
 
         if len(results) == 0:
