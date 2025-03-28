@@ -2,16 +2,18 @@ import os
 import xarray as xr
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
+import numpy as np
 
 from pathlib import Path
 from datetime import datetime
 
 
 def plot_variable(file_path: Path, var_of_interest: str, var_label: str, plot_title: str,
-                  color_map='viridis', transformation=None):
+                  color_map='viridis', transformation: 'function'=None, save_dir: Path=None,
+                  min_lon=-118.75, max_lon=-118.45, min_lat=33.99, max_lat=34.15, zoomed_map: bool=True):
     """
     Plots a variable of interest from the data from the file path with the specified parameters.
-    Saves the image of the plot in a subdirectory titled as the variable of interest.
+    Saves the image of the plot in a subdirectory.
 
     Params:
         file_path (Path): the path to the downloaded PACE data file
@@ -20,21 +22,48 @@ def plot_variable(file_path: Path, var_of_interest: str, var_label: str, plot_ti
         plot_title (str): the title for the plot
         color_map (str): the color map for the plot (ex. viridis, cividis, plasma)
         transformation (function): a transformation to be applied to the data (ex. np.log)
+        save_dir (Path): a directory to save the image of the plot in
+            Will create a default subdirectory in `images/{var_of_interest}` if not specified
+        min_lon (float): the minimum longitude value for the area of interest (AOI)
+        max_lon (float): the maximum longitude value for the AOI
+        min_lat (float): the minimum latitude value for the AOI
+        max_lat (float): the maximum latitude value for the AOI (default for Pacific Palisades)
+        zoomed_map (bool): if set to True, will subset the data and plot based on the min/max lat/lon
+            Else will use the full area provided in the data file
     """
     # Open the file and extract relevant information
     ds = open_file_as_xr(file_path, var_of_interest)
     date_str = _extract_date_from_file(file_path)
     
-    var = ds[var_of_interest]
+    var = ds[var_of_interest].values
+    lon = ds['longitude'].values
+    lat = ds['latitude'].values
+
+    if zoomed_map:
+        # Create a mask for the bounding box
+        lon_mask = (lon >= min_lon) & (lon <= max_lon)
+        lat_mask = (lat >= min_lat) & (lat <= max_lat)
+
+        # Apply the mask using array slicing
+        valid_rows = np.where(lat_mask.any(axis=1))[0]  # Get valid row indices
+        valid_cols = np.where(lon_mask.any(axis=0))[0]  # Get valid col indices
+
+        # Subset the data using row and column indices
+        lon = lon[np.min(valid_rows):np.max(valid_rows)+1, np.min(valid_cols):np.max(valid_cols)+1]
+        lat = lat[np.min(valid_rows):np.max(valid_rows)+1, np.min(valid_cols):np.max(valid_cols)+1]
+        var = var[np.min(valid_rows):np.max(valid_rows)+1, np.min(valid_cols):np.max(valid_cols)+1]
+
     if transformation:
         var = transformation(var)
-    lon = ds['longitude']
-    lat = ds['latitude']
 
     # Create the plot
     plt.figure(figsize=(10, 6))
     ax = plt.axes(projection=ccrs.PlateCarree())
     plt.pcolormesh(lon, lat, var, cmap=color_map, shading='auto', transform=ccrs.PlateCarree())
+
+    if zoomed_map:
+        # Set the map extent to the bounding box
+        ax.set_extent([min_lon-1, max_lon+1, min_lat-1, max_lat+1], crs=ccrs.PlateCarree())
 
     # Add a coordinate grid and coastlines to the plot
     ax.coastlines()
@@ -49,8 +78,9 @@ def plot_variable(file_path: Path, var_of_interest: str, var_label: str, plot_ti
     plt.ylabel("Latitude")
 
     # Save the plot in a subdirectory
-    dir = _create_image_subdir(var_of_interest)
-    plt.savefig(dir / date_str)
+    if save_dir == None:
+        save_dir = _create_image_subdir(var_of_interest)
+    plt.savefig(save_dir / date_str)
     plt.close()
 
 def print_metadata(file_path: Path):

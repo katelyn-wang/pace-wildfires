@@ -14,6 +14,7 @@ def plot_BGC_data(bgc_directory: Path, verbose=True):
 
     Params:
         bgc_directory: a path to a directory containing PACE OCI L2 BGC downloaded data
+        verbose (bool): writes print statements about the progress if set to True
     """
     for file in os.listdir(bgc_directory):
         file_path = bgc_directory / file
