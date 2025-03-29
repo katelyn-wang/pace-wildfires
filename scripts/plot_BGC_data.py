@@ -22,15 +22,15 @@ def plot_BGC_data(bgc_directory: Path, verbose=True):
             print("File:", file_path.name)
             print(" Plotting chlorophyll-a")
         plot_variable(file_path, "chlor_a", "Log of Chlorophyll-a (mg/m³)",
-            "Chlorophyll-a Concentration", transformation=np.log)
+            "Chlorophyll-a Concentration", transformation=np.log, vmin=-6, vmax=6)
 
         if verbose: print(" Plotting particulate organic carbon")
         plot_variable(file_path, "poc", "Particulate Organic Carbon (mg/m³)",
-            "POC Concentration", color_map="cividis", transformation=np.log1p)
+            "POC Concentration", color_map="cividis", transformation=np.log1p, vmin=0, vmax=7.5)
 
         if verbose: print(" Plotting phytoplankton carbon")
         plot_variable(file_path, "carbon_phyto", "Phytoplankton Carbon (mg/m³)",
-            "Phytoplankton Carbon Concentration", color_map="plasma", transformation=np.log)
+            "Phytoplankton Carbon Concentration", color_map="plasma", transformation=np.log, vmin=0, vmax=7)
 
 
 if __name__ == '__main__':
