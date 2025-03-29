@@ -10,7 +10,8 @@ from datetime import datetime
 
 def plot_variable(file_path: Path, var_of_interest: str, var_label: str, plot_title: str,
                   color_map='viridis', transformation: 'function'=None, save_dir: Path=None,
-                  min_lon=-118.75, max_lon=-118.45, min_lat=33.99, max_lat=34.15, zoomed_map: bool=True):
+                  min_lon=-118.75, max_lon=-118.45, min_lat=33.99, max_lat=34.15,
+                  zoomed_map: bool=True, vmin: float=None, vmax: float = None, padding: float = 0.5):
     """
     Plots a variable of interest from the data from the file path with the specified parameters.
     Saves the image of the plot in a subdirectory.
@@ -30,6 +31,9 @@ def plot_variable(file_path: Path, var_of_interest: str, var_label: str, plot_ti
         max_lat (float): the maximum latitude value for the AOI (default for Pacific Palisades)
         zoomed_map (bool): if set to True, will subset the data and plot based on the min/max lat/lon
             Else will use the full area provided in the data file
+        vmin (float): the minimum value for the colorbar, for consistency across different plots
+        vmax (float): the maximum value for the colorbar, for consistency across different plots
+        padding (float): the padding in latitude/longitude around the bounding box to show in the plot
     """
     # Open the file and extract relevant information
     ds = open_file_as_xr(file_path, var_of_interest)
@@ -59,11 +63,11 @@ def plot_variable(file_path: Path, var_of_interest: str, var_label: str, plot_ti
     # Create the plot
     plt.figure(figsize=(10, 6))
     ax = plt.axes(projection=ccrs.PlateCarree())
-    plt.pcolormesh(lon, lat, var, cmap=color_map, shading='auto', transform=ccrs.PlateCarree())
+    plt.pcolormesh(lon, lat, var, cmap=color_map, shading='auto', transform=ccrs.PlateCarree(), vmin=vmin, vmax=vmax)
 
     if zoomed_map:
         # Set the map extent to the bounding box
-        ax.set_extent([min_lon-1, max_lon+1, min_lat-1, max_lat+1], crs=ccrs.PlateCarree())
+        ax.set_extent([min_lon-padding, max_lon+padding, min_lat-padding, max_lat+padding], crs=ccrs.PlateCarree())
 
     # Add a coordinate grid and coastlines to the plot
     ax.coastlines()
@@ -79,7 +83,7 @@ def plot_variable(file_path: Path, var_of_interest: str, var_label: str, plot_ti
 
     # Save the plot in a subdirectory
     if save_dir == None:
-        save_dir = _create_image_subdir(var_of_interest)
+        save_dir = _create_image_subdir(file_path.parent.name, var_of_interest)
     plt.savefig(save_dir / date_str)
     plt.close()
 
@@ -114,18 +118,20 @@ def open_file_as_xr(file_path: Path, var_of_interest: str):
     # print(dataset)
     return dataset
 
-def _create_image_subdir(subdir_name: str):
+def _create_image_subdir(short_name: str, subdir_name: str):
     """
-    Helper function to create a subdirectory in the /images folder to save figures in.
+    Helper function to create a subdirectory in the /images/{short_name} folder to save figures in.
 
     Params:
+        short_name (str): the short name of a data product to use as the parent directory
         subdir_name (str): the name for the subdirectory
     Returns:
         Path: The path to the subdirectory
     """
     images_dir = Path("images")
     os.makedirs(images_dir, exist_ok=True)
-    subdir = images_dir / subdir_name
+    short_name_dir = images_dir / short_name
+    subdir = short_name_dir / subdir_name
     os.makedirs(subdir, exist_ok=True)
     return subdir
 
