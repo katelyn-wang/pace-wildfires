@@ -31,8 +31,7 @@ if __name__=='__main__':
 
     ### Download data for a short_name:
     # downloader.download_data("PACE_OCI_L2_BGC_NRT", version=3.0, max_count=30)
-    # downloader.download_data("PACE_OCI_L3M_CHL_NRT")
-    # downloader.download_data("PACE_OCI_L2_AOP_NRT")
-    # downloader.download_data("PACE_HARP2_L1C_SCI", max_count=1)
-    # downloader.download_data("PACE_OCI_L2_LANDVI", max_count=1)
-    # downloader.download_data("PACE_OCI_L2_LANDVI_NRT")
+    # downloader.download_data("PACE_OCI_L2_AOP_NRT", max_count=30)
+    # downloader.download_data("PACE_OCI_L2_LANDVI_NRT", max_count=30)
+    # downloader.download_data("PACE_HARP2_L1C_SCI", max_count=30)
+    # downloader.download_data("PACE_SPEXONE_L1C_SCI", max_count=30)
