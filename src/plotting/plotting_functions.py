@@ -44,6 +44,11 @@ def plot_variable(file_path: Path, var_of_interest: str, var_label: str, plot_ti
     lat = ds['latitude'].values
 
     if zoomed_map:
+        min_lon -= padding
+        min_lat -= padding
+        max_lon += padding
+        max_lat += padding
+
         # Create a mask for the bounding box
         lon_mask = (lon >= min_lon) & (lon <= max_lon)
         lat_mask = (lat >= min_lat) & (lat <= max_lat)
@@ -67,7 +72,7 @@ def plot_variable(file_path: Path, var_of_interest: str, var_label: str, plot_ti
 
     if zoomed_map:
         # Set the map extent to the bounding box
-        ax.set_extent([min_lon-padding, max_lon+padding, min_lat-padding, max_lat+padding], crs=ccrs.PlateCarree())
+        ax.set_extent([min_lon, max_lon, min_lat, max_lat], crs=ccrs.PlateCarree())
 
     # Add a coordinate grid and coastlines to the plot
     ax.coastlines()
