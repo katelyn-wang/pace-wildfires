@@ -39,7 +39,7 @@ class PaceDataDownloader:
             return
         else:
             print(f"Found {len(results)} results")
-            print(results)
+            # print(results)
 
         data_dir = Path("data")
         data_dir.mkdir(exist_ok=True)
@@ -49,4 +49,4 @@ class PaceDataDownloader:
 
         save_dir.mkdir(exist_ok=True)
         paths = earthaccess.download(results, str(Path(save_dir)))
-        print(paths)
+        # print(paths)
