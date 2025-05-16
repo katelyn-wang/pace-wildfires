@@ -6,3 +6,6 @@ xarray[complete]
 geopandas
 numpy
 earthaccess
+plotly
+notebook
+nbformat
