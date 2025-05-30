@@ -10,8 +10,8 @@ from src.plotting.plotting_functions import open_file_as_xr, _extract_date_from_
 
 def overlay_plot(bgc_file, aop_file, landvi_file, bgc_var="chlor_a", aop_var="aot_865", landvi_var="ndvi",
                  min_lon=-118.75, max_lon=-118.45, min_lat=33.99, max_lat=34.15, padding=1, zoomed_map=True,
-                 cmaps = ['viridis', 'Greys', 'Greens'], alphas = [0.7, 0.3, 1], 
-                 min_max_values = [(-0.6, 0.8), (0, 0.35), (-1, 2)]):
+                 cmaps = ['viridis', 'Greys', 'Greens'], alphas = [0.7, 0.4, 1], 
+                 min_max_values = [(-0.6, 0.8), (0, 0.3), (-1, 1)]):
     """
     Creates an overlayed plot with variables from BGC, AOP, and LANDVI files.
     Assumes the files are from the same date/time and location.
