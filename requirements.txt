@@ -9,3 +9,4 @@ earthaccess
 plotly
 notebook
 nbformat
+windrose
