@@ -24,17 +24,20 @@ if __name__=='__main__':
     auth = earthaccess.login(persist=True)
 
     ### Uncomment to print out the short names for each instrument:
-    PaceDataDownloader.print_short_names_for_instrument("oci")
-    PaceDataDownloader.print_short_names_for_instrument("harp2")
-    PaceDataDownloader.print_short_names_for_instrument("spexone")
+    # PaceDataDownloader.print_short_names_for_instrument("oci")
+    # PaceDataDownloader.print_short_names_for_instrument("harp2")
+    # PaceDataDownloader.print_short_names_for_instrument("spexone")
+    # PaceDataDownloader.print_short_names_for_instrument("modis")
+
 
     # downloader = PaceDataDownloader(bounding_box=pacific_pal_bbox, time_span=january_dates)
     downloader = PaceDataDownloader(bounding_box=pacific_pal_bbox, time_span=wider_dates)
 
 
     ### Download data for a short_name:
-    downloader.download_data("PACE_OCI_L2_BGC_NRT", max_count=100, version=3.0)
-    downloader.download_data("PACE_OCI_L2_AOP_NRT", max_count=100)
-    downloader.download_data("PACE_OCI_L2_LANDVI_NRT", max_count=100)
+    # downloader.download_data("PACE_OCI_L2_BGC_NRT", max_count=100, version=3.0)
+    # downloader.download_data("PACE_OCI_L2_AOP_NRT", max_count=100)
+    # downloader.download_data("PACE_OCI_L2_LANDVI_NRT", max_count=100)
     # downloader.download_data("PACE_HARP2_L1C_SCI", max_count=30)
     # downloader.download_data("PACE_SPEXONE_L1C_SCI", max_count=30)
+    # downloader.download_data("MODISA_L2_OC", max_count=100)
