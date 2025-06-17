@@ -7,6 +7,8 @@ from src.downloader.pace_data_downloader import PaceDataDownloader
 
 if __name__=='__main__':
     """
+    Use this script to download PACE data from EarthAccess.
+
     Notes about the data:
     - OCI has a lot of data products
     - HARP2 and SPEXOne only have Level 0 and Level 1A-C data (no data products)
@@ -14,7 +16,7 @@ if __name__=='__main__':
     """
     # Time Span
     january_dates = ("2025-01-01", "2025-01-31")
-    wider_dates = ("2024-12-22", "2025-02-28")
+    wider_dates = ("2025-01-01", "2025-05-01")
 
     # AOI Bounding Box (Pacific Palisades Fire & Coast of Pacific Ocean)
     pacific_pal_bbox = (-118.75, 33.90, -118.45, 34.15)
@@ -23,21 +25,33 @@ if __name__=='__main__':
     # Earthdata login
     auth = earthaccess.login(persist=True)
 
-    ### Uncomment to print out the short names for each instrument:
-    # PaceDataDownloader.print_short_names_for_instrument("oci")
+    ### Uncomment to print out the short names (dataset IDs) for each instrument:
+    PaceDataDownloader.print_short_names_for_instrument("oci")
     # PaceDataDownloader.print_short_names_for_instrument("harp2")
     # PaceDataDownloader.print_short_names_for_instrument("spexone")
     # PaceDataDownloader.print_short_names_for_instrument("modis")
 
 
-    # downloader = PaceDataDownloader(bounding_box=pacific_pal_bbox, time_span=january_dates)
+    # Can change the bounding box area and/or time span
     downloader = PaceDataDownloader(bounding_box=pacific_pal_bbox, time_span=wider_dates)
 
 
-    ### Download data for a short_name:
-    # downloader.download_data("PACE_OCI_L2_BGC_NRT", max_count=100, version=3.0)
-    # downloader.download_data("PACE_OCI_L2_AOP_NRT", max_count=100)
-    # downloader.download_data("PACE_OCI_L2_LANDVI_NRT", max_count=100)
+    ### Uncomment below to download data from different datasets:
+
+    ## Biogeochemical Data
+    # downloader.download_data("PACE_OCI_L2_BGC_NRT", max_count=150, version=3.0)
+
+    ## Apparent Optical Properties Data
+    # downloader.download_data("PACE_OCI_L2_AOP_NRT", max_count=150)
+
+    ## Land Vegetation Indices
+    # downloader.download_data("PACE_OCI_L2_LANDVI_NRT", max_count=150)
+
+    ## HARP2 Level 1C Data
     # downloader.download_data("PACE_HARP2_L1C_SCI", max_count=30)
+
+    ## SPEXOne Level 1C Data
     # downloader.download_data("PACE_SPEXONE_L1C_SCI", max_count=30)
-    # downloader.download_data("MODISA_L2_OC", max_count=100)
+
+    ## Aqua MODIS Data
+    # downloader.download_data("MODISA_L2_OC", max_count=150)
