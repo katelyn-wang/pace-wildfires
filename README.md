@@ -79,7 +79,9 @@ A time series plot of daily measurements of land vegetation indices. NDVI declin
 
 <img width="1189" height="590" alt="image" src="https://github.com/user-attachments/assets/379a295a-584c-43be-bf14-200779ec87f9" />
 
-Changes in NDVI Over Time. During the fire, there is a noticeable decline in vegetation in the fire zone (red circle). A few months later in April, the vegetation is still in recovery.
+#### Changes in NDVI Over Time
+
+During the fire, there is a noticeable decline in vegetation in the fire zone (red circle). A few months later in April, the vegetation is still in recovery.
 
 <img width="1467" height="429" alt="image" src="https://github.com/user-attachments/assets/54e607d3-1005-4b39-abc2-3a6d760c53b2" />
 
